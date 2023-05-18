@@ -24,6 +24,7 @@ resource "aws_vpc" "this" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "1486070c-2cc5-4429-94c7-fc52606538e1"
+    env                  = "dev"
   }
 }
 
@@ -44,6 +45,7 @@ resource "aws_subnet" "this_public" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "c4f28bf9-30ca-4f40-a55c-55cf135b70fe"
+    env                  = "dev"
   }
 }
 
@@ -62,6 +64,7 @@ resource "aws_subnet" "this_private" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "9745aa8e-0e1e-4010-96a3-80b226d0b865"
+    env                  = "dev"
   }
 }
 
@@ -80,6 +83,7 @@ resource "aws_internet_gateway" "this" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "83e04cb7-bea4-4e06-8396-ee32cd16a33e"
+    env                  = "dev"
   }
 }
 
@@ -108,6 +112,7 @@ resource "aws_route_table" "this_public" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "d93bb5b0-5626-449e-964f-be23459821a4"
+    env                  = "dev"
   }
 }
 
@@ -144,6 +149,7 @@ resource "aws_security_group" "web_sg" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "d303b2e3-acdd-4845-8b38-82f37a15640b"
+    env                  = "dev"
   }
 }
 
@@ -159,6 +165,7 @@ resource "aws_eip" "this" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "4a79d5f4-9f74-4846-8577-a85760ae2ff0"
+    env                  = "dev"
   }
 }
 
@@ -179,6 +186,7 @@ resource "aws_instance" "web_instance" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "29351e56-0895-4c5c-a08f-376e701520b5"
+    env                  = "dev"
   }
   iam_instance_profile = aws_iam_instance_profile.this.name
 }
@@ -212,6 +220,7 @@ EOF
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "8e08c857-b72b-4e47-97c6-7a59f66ec4fd"
+    env                  = "dev"
   }
 }
 
@@ -258,6 +267,7 @@ resource "aws_iam_instance_profile" "this" {
     git_org              = "davidaavilar"
     git_repo             = "davila-drift-detection"
     yor_trace            = "ddfa6814-26ed-4365-aa0d-b88e33dc29b3"
+    env                  = "dev"
   }
 }
 
