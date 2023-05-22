@@ -25,7 +25,10 @@ resource "aws_vpc" "this" {
     git_repo             = "davila-drift-detection"
     yor_trace            = "1486070c-2cc5-4429-94c7-fc52606538e1"
   }
+  enable_dns_hostnames = true
+  enable_dns_support = true
 }
+
 
 # Create two Subnets: Public and Private
 
