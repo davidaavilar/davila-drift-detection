@@ -16,6 +16,7 @@ resource "aws_vpc" "this" {
 
   tags = {
     Name = "${var.stack_name}-vpc"
+    env  = "dev"
   }
 }
 
@@ -28,6 +29,7 @@ resource "aws_subnet" "this_public" {
 
   tags = {
     Name = "${var.stack_name}-public-subnet"
+    env  = "dev"
   }
 }
 
@@ -38,6 +40,7 @@ resource "aws_subnet" "this_private" {
 
   tags = {
     Name = "${var.stack_name}-private-subnet"
+    env  = "dev"
   }
 }
 
@@ -48,6 +51,7 @@ resource "aws_internet_gateway" "this" {
 
   tags = {
     Name = "${var.stack_name}-igw",
+    env  = "dev"
   }
 }
 
@@ -68,6 +72,7 @@ resource "aws_route_table" "this_public" {
 
   tags = {
     Name = "${var.stack_name}-public-route-table"
+    env  = "dev"
   }
 }
 
@@ -86,7 +91,7 @@ resource "aws_security_group" "web_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["181.128.160.118/32","52.8.146.99/32"]
+    cidr_blocks = ["181.128.160.118/32", "52.8.146.99/32"]
   }
 
   egress {
@@ -95,11 +100,17 @@ resource "aws_security_group" "web_sg" {
     protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    env = "dev"
+  }
 }
 
 resource "aws_eip" "this" {
   instance = aws_instance.web_instance.id
   vpc      = true
+  tags = {
+    env = "dev"
+  }
 }
 
 resource "aws_instance" "web_instance" {
@@ -107,10 +118,11 @@ resource "aws_instance" "web_instance" {
   instance_type = "t3.micro"
   key_name      = "ec2-default"
 
-  subnet_id                   = aws_subnet.this_public.id
-  vpc_security_group_ids      = [aws_security_group.web_sg.id]
+  subnet_id              = aws_subnet.this_public.id
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
   tags = {
     "Name" : "${var.stack_name}-ec2",
+    env = "dev"
   }
   iam_instance_profile = aws_iam_instance_profile.this.name
 }
@@ -135,42 +147,48 @@ resource "aws_iam_role" "this" {
   ]
 }
 EOF
+  tags = {
+    env = "dev"
+  }
 }
 
 # Attach IAM Policy to IAM role for Lambda
 resource "aws_iam_role_policy" "this" {
-  name   = "${var.stack_name}-ec2-iam-policy"
-  role   = aws_iam_role.this.id
+  name = "${var.stack_name}-ec2-iam-policy"
+  role = aws_iam_role.this.id
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "Logs",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "logs:PutMetricFilter",
-                "cloudwatch:PutMetricData"
-            ],
-            "Effect": "Allow",
-            "Resource": "arn:aws:logs:*:*:*"
-        },
-        {
-            "Sid": "SNS",
-            "Action": [
-                "sns:*"
-            ],
-            "Effect": "Allow",
-            "Resource": "*"
-        }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "Logs",
+        "Action" : [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:PutMetricFilter",
+          "cloudwatch:PutMetricData"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "arn:aws:logs:*:*:*"
+      },
+      {
+        "Sid" : "SNS",
+        "Action" : [
+          "sns:*"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "*"
+      }
     ]
-})
+  })
 }
 
 resource "aws_iam_instance_profile" "this" {
   name = "${var.stack_name}-ec2-instance-profile"
   role = aws_iam_role.this.id
+  tags = {
+    env = "dev"
+  }
 }
 
 output "How_to_Connect_to" {
