@@ -113,6 +113,9 @@ resource "aws_instance" "web_instance" {
     "Name" : "${var.stack_name}-ec2",
   }
   iam_instance_profile = aws_iam_instance_profile.this.name
+  metadata_options {
+    http_tokens = "required"
+  }
 }
 
 ###### EC2 INSTANCE ROLE
